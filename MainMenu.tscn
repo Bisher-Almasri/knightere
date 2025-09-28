@@ -1,47 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8627kuccvnvn"]
+[gd_scene load_steps=7 format=3 uid="uid://c8627kuccvnvn"]
 
 [ext_resource type="Texture2D" uid="uid://cirmr02m7447o" path="res://Logo.webp" id="1"]
+[ext_resource type="Script" uid="uid://dwndk6vm7fb42" path="res://main_menu.gd" id="1_7r1g0"]
+[ext_resource type="Texture2D" uid="uid://dx3msrk6xy36l" path="res://background.webp" id="2_cqjrg"]
 [ext_resource type="Texture2D" uid="uid://da08q2mhqjumc" path="res://Play.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://rhvh58rtrul0" path="res://Quit.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://b7ivc8swtxgmj" path="res://version.png" id="5"]
-[ext_resource type="Texture2D" uid="uid://dne8t4sayx8iu" path="res://house.png" id="6"]
 
 [node name="MainMenu" type="MarginContainer"]
 scale = Vector2(0.6, 0.6)
 mouse_filter = 0
+script = ExtResource("1_7r1g0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3.36691, 4.89054)
+texture = ExtResource("2_cqjrg")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 mouse_filter = 0
 alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="Logo" type="TextureRect" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-texture = ExtResource("1")
-stretch_mode = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 1
-
-[node name="Continue" type="TextureRect" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-texture = ExtResource("3")
-stretch_mode = 3
-
-[node name="Options" type="TextureRect" parent="HBoxContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-texture = ExtResource("4")
-stretch_mode = 3
-
-[node name="Version" type="TextureRect" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-texture = ExtResource("5")
-stretch_mode = 3
 
 [node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -49,7 +27,33 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 0
 
-[node name="Characters" type="TextureRect" parent="HBoxContainer/CenterContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/CenterContainer"]
 layout_mode = 2
-texture = ExtResource("6")
+
+[node name="Logo" type="TextureRect" parent="HBoxContainer/CenterContainer/VBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("1")
 stretch_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/CenterContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Continue" type="TextureRect" parent="HBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3")
+stretch_mode = 3
+
+[node name="Options" type="TextureRect" parent="HBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4")
+stretch_mode = 3
+
+[node name="Version" type="TextureRect" parent="HBoxContainer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("5")
+stretch_mode = 3
+
+[connection signal="gui_input" from="HBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/Continue" to="." method="_on_continue_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/CenterContainer/VBoxContainer2/VBoxContainer/Options" to="." method="_on_options_gui_input"]

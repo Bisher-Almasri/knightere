@@ -7,6 +7,7 @@ signal gravity_changed(new_gravity: Vector2)
 @export var jump_force: float = 500.0
 @export var gravity_direction := 1
 @export var gravity_strength: float = 1000.0
+@export var cangravity: bool = true
 
 var master_gravity := Vector2.DOWN
 
@@ -52,7 +53,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("spawn_clone"):
 		_on_LifetimeTimer_timeout()
 		
-	if Input.is_action_just_pressed("flip_gravity"):
+	if Input.is_action_just_pressed("flip_gravity") and cangravity and can_jump():
 		gravity_direction = (gravity_direction % 4) + 1
 		match gravity_direction:
 			1: set_gravity(Vector2.DOWN)
@@ -81,5 +82,19 @@ func _on_LifetimeTimer_timeout():
 	emit_signal("clone_died", self)
 	queue_free()
 
-func die():
+func can_jump() -> bool:
+	if master_gravity == Vector2.DOWN and is_on_floor():
+		return true
+	if master_gravity == Vector2.UP and is_on_ceiling():
+		return true
+	if master_gravity == Vector2.RIGHT and is_on_wall():
+		return get_wall_normal().x < 0
+	if master_gravity == Vector2.LEFT and is_on_wall():
+		return get_wall_normal().x > 0
+	return false
+
+func die() -> void:
 	_on_LifetimeTimer_timeout()
+
+func _on_timer_timeout() -> void:
+	cangravity = true

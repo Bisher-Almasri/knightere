@@ -4,9 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bc10f54p2kwum" path="res://door_cloesed.webp" id="2_5peh4"]
 [ext_resource type="Texture2D" uid="uid://db0keq06kwnhe" path="res://door_open.webp" id="3_bb0yv"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ajs4"]
-size = Vector2(2, 14)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_xeo7h"]
 animations = [{
 "frames": [{
@@ -26,16 +23,22 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ajs4"]
+size = Vector2(685.5, 1060)
+
 [node name="Area2D" type="Area2D"]
 scale = Vector2(0.1, 0.1)
 script = ExtResource("1_0nna0")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(11, 3)
-shape = SubResource("RectangleShape2D_6ajs4")
-disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xeo7h")
 animation = &"closed"
 autoplay = "closed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(12.75, 10)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_6ajs4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

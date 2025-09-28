@@ -9,11 +9,13 @@ extends CharacterBody2D
 var clones: Array = []
 var gravity_vector := Vector2.DOWN
 var gravity_direction: int = 1
-var control_locked: bool = false  
+var control_locked: bool = false
+
+@onready var player_camera: Camera2D = get_node_or_null("Camera2D")
 
 func _physics_process(delta: float) -> void:
 	var input_dir := Vector2.ZERO
-	
+
 	if not control_locked:
 		handle_animation()
 
@@ -38,7 +40,7 @@ func _physics_process(delta: float) -> void:
 	velocity += gravity_vector * gravity_strength * delta
 	move_and_slide()
 
-	if Input.is_action_just_pressed("flip_gravity") and cangravity:
+	if Input.is_action_just_pressed("flip_gravity") and cangravity and can_jump():
 		gravity_direction = (gravity_direction % 4) + 1
 		match gravity_direction:
 			1: set_gravity(Vector2.DOWN)
@@ -48,7 +50,6 @@ func _physics_process(delta: float) -> void:
 		cangravity = false
 		$Timer.start()
 
-	# Spawn clone
 	if not control_locked and Input.is_action_just_pressed("spawn_clone") and clones.is_empty():
 		spawn_clone()
 
@@ -74,6 +75,7 @@ func spawn_clone() -> void:
 	if not clone_scene:
 		return
 
+	$AnimatedSprite2D.play("summon")
 	var clone = clone_scene.instantiate()
 	var offset = 100
 	var new_position := position
@@ -93,6 +95,13 @@ func spawn_clone() -> void:
 
 	control_locked = true
 
+	var cam := Camera2D.new()
+	cam.name = "Camera2D"
+	cam.position_smoothing_enabled = true
+	clone.add_child(cam)
+
+	cam.make_current()
+
 	clone.connect("gravity_changed", Callable(self, "_on_clone_gravity_changed"))
 	clone.connect("clone_died", Callable(self, "_on_clone_died"))
 
@@ -105,11 +114,17 @@ func _on_clone_died(clone_node) -> void:
 	clones.erase(clone_node)
 	control_locked = false
 
+	if is_instance_valid(player_camera):
+		player_camera.make_current()
+
+		# Wait one frame (or a small delay) before playing awaken
+		await get_tree().process_frame
+		$AnimatedSprite2D.play("awaken")
+
 
 func set_gravity(dir: Vector2) -> void:
 	gravity_vector = dir
 	update_sprite_rotation()
-
 
 func update_sprite_rotation() -> void:
 	match gravity_vector:
@@ -117,7 +132,6 @@ func update_sprite_rotation() -> void:
 		Vector2.UP:    rotation_degrees = 180
 		Vector2.LEFT:  rotation_degrees = 90
 		Vector2.RIGHT: rotation_degrees = -90
-
 
 func can_jump() -> bool:
 	if gravity_vector == Vector2.DOWN and is_on_floor():
@@ -130,10 +144,8 @@ func can_jump() -> bool:
 		return get_wall_normal().x > 0
 	return false
 
-
 func die() -> void:
 	get_tree().reload_current_scene()
-
 
 func _on_timer_timeout() -> void:
 	cangravity = true
