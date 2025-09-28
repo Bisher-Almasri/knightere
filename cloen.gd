@@ -5,8 +5,10 @@ signal gravity_changed(new_gravity: Vector2)
 
 @export var speed: float = 500.0
 @export var jump_force: float = 500.0
-var master_gravity := Vector2.DOWN
 @export var gravity_direction := 1
+@export var gravity_strength: float = 1000.0
+
+var master_gravity := Vector2.DOWN
 
 func _ready():
 	$LifetimeTimer.start()
@@ -57,7 +59,8 @@ func _physics_process(delta):
 			2: set_gravity(Vector2.RIGHT)
 			3: set_gravity(Vector2.UP)
 			4: set_gravity(Vector2.LEFT)
-
+			
+	velocity += master_gravity * gravity_strength * delta
 	move_and_slide()
 
 
@@ -77,3 +80,6 @@ func _on_LifetimeTimer_timeout():
 	print("weqrwthyjkyhtrewqrghjmhj")
 	emit_signal("clone_died", self)
 	queue_free()
+
+func die():
+	_on_LifetimeTimer_timeout()

@@ -27,13 +27,15 @@ animations = [{
 }]
 
 [node name="Area2D" type="Area2D"]
+scale = Vector2(0.1, 0.1)
 script = ExtResource("1_0nna0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(11, 3)
 shape = SubResource("RectangleShape2D_6ajs4")
-one_way_collision = true
+disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xeo7h")
-animation = &"open"
+animation = &"closed"
+autoplay = "closed"
