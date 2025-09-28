@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://vsv6qfd4sb5"]
+
+[ext_resource type="Script" uid="uid://4l2amqr3yqnv" path="res://dorrrrr.gd" id="1_0nna0"]
+[ext_resource type="Texture2D" uid="uid://bc10f54p2kwum" path="res://door_cloesed.webp" id="2_5peh4"]
+[ext_resource type="Texture2D" uid="uid://db0keq06kwnhe" path="res://door_open.webp" id="3_bb0yv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ajs4"]
+size = Vector2(2, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xeo7h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5peh4")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bb0yv")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_0nna0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11, 3)
+shape = SubResource("RectangleShape2D_6ajs4")
+one_way_collision = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xeo7h")
+animation = &"open"
