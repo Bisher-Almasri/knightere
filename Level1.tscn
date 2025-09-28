@@ -1916,11 +1916,15 @@ tile_map_data = PackedByteArray("AAAAAAoAAwAGAAAAAAAAAAsAAwAAAAEAAAAAAAwAAwAAAAE
 tile_set = SubResource("TileSet_lmyl5")
 
 [node name="Area2D2" parent="." instance=ExtResource("3_cove1")]
-position = Vector2(-37, -780)
+position = Vector2(-40, -770)
 rotation = 1.56259
 
 [node name="Area2D" parent="." instance=ExtResource("4_dwyiq")]
 position = Vector2(1490, 386)
+
+[node name="Area2D2" parent="Area2D" instance=ExtResource("3_cove1")]
+position = Vector2(-37, -780)
+rotation = 1.56259
 
 [node name="Node" type="Node" parent="."]
 
