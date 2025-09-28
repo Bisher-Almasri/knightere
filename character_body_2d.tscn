@@ -1,7 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://dpwln5okkor1i"]
+[gd_scene load_steps=32 format=3 uid="uid://dpwln5okkor1i"]
 
 [ext_resource type="Script" uid="uid://bjvh45iyeixag" path="res://moev.gd" id="1_ij6vw"]
 [ext_resource type="Texture2D" uid="uid://bxwl18w7l8p08" path="res://knight.webp" id="2_ij6vw"]
+[ext_resource type="AudioStream" uid="uid://cs0ljo88sa8os" path="res://cloning sfx.wav" id="3_ghijl"]
+[ext_resource type="AudioStream" uid="uid://b6mniwmt02b1h" path="res://walking with armor (1).wav" id="4_44cfe"]
+[ext_resource type="AudioStream" uid="uid://cxxurmcilswyy" path="res://jump.mp3" id="5_dd465"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ij6vw"]
 atlas = ExtResource("2_ij6vw")
@@ -204,6 +207,7 @@ size = Vector2(12, 19)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(5, 5)
+collision_layer = 2
 script = ExtResource("1_ij6vw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -219,5 +223,14 @@ shape = SubResource("RectangleShape2D_ij6vw")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="Clone" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ghijl")
+
+[node name="Walk" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_44cfe")
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_dd465")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

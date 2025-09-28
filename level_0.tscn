@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://bm4emhqx3wnsm"]
+[gd_scene load_steps=11 format=4 uid="uid://bm4emhqx3wnsm"]
 
 [ext_resource type="PackedScene" uid="uid://dpwln5okkor1i" path="res://character_body_2d.tscn" id="1_nu7sl"]
 [ext_resource type="Texture2D" uid="uid://cbauta10lbxrq" path="res://tilemap.webp" id="2_omks2"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://vsv6qfd4sb5" path="res://dooororororor.tscn" id="4_40rfo"]
 [ext_resource type="PackedScene" uid="uid://uoy8doq8n62p" path="res://area_2d.tscn" id="5_eomlm"]
 [ext_resource type="Texture2D" uid="uid://dx3msrk6xy36l" path="res://background.webp" id="6_wwd78"]
+[ext_resource type="Script" uid="uid://s0fjrip5idcg" path="res://TextMan.gd" id="7_wwd78"]
+[ext_resource type="AudioStream" uid="uid://drydc8qvv21w2" path="res://Text sound effect (1).wav" id="8_40rfo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_08q8e"]
 texture = ExtResource("2_omks2")
@@ -1959,5 +1961,20 @@ rotation = 3.14159
 position = Vector2(435, 369)
 rotation = -3.14159
 scale = Vector2(0.162463, -0.434415)
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(500, 0)
+offset_left = 750.0
+offset_top = 209.0
+offset_right = 790.0
+offset_bottom = 310.0
+theme_override_font_sizes/font_size = 25
+text = "Lorem Ipsumewfgr"
+autowrap_mode = 2
+justification_flags = 161
+script = ExtResource("7_wwd78")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Label"]
+stream = ExtResource("8_40rfo")
 
 [connection signal="pressed_button" from="Area2D2" to="Area2D" method="unlock"]

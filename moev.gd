@@ -28,6 +28,7 @@ func _physics_process(delta: float) -> void:
 				velocity.y = input_dir.y * speed
 
 		if can_jump():
+			#$Jump.play()
 			if gravity_vector == Vector2.DOWN and Input.is_action_just_pressed("up"):
 				velocity = -gravity_vector * jump_force
 			elif gravity_vector == Vector2.UP and Input.is_action_just_pressed("down"):
@@ -53,22 +54,32 @@ func _physics_process(delta: float) -> void:
 	if not control_locked and Input.is_action_just_pressed("spawn_clone") and clones.is_empty():
 		spawn_clone()
 
-
 func handle_animation() -> void:
-	if Input.is_action_pressed("move_left") and gravity_direction == 1 \
-	or Input.is_action_pressed("down") and gravity_direction == 2 \
-	or Input.is_action_pressed("move_right") and gravity_direction == 3 \
-	or Input.is_action_pressed("up") and gravity_direction == 4:
+	# Check for movement and gravity direction
+	if (Input.is_action_pressed("move_left") and gravity_direction == 1) \
+	or (Input.is_action_pressed("down") and gravity_direction == 2) \
+	or (Input.is_action_pressed("move_right") and gravity_direction == 3) \
+	or (Input.is_action_pressed("up") and gravity_direction == 4):
 		$AnimatedSprite2D.flip_h = true
-		$AnimatedSprite2D.play("walk")
-	elif Input.is_action_pressed("move_right") and gravity_direction == 1 \
-	or Input.is_action_pressed("up") and gravity_direction == 2 \
-	or Input.is_action_pressed("move_left") and gravity_direction == 3 \
-	or Input.is_action_pressed("down") and gravity_direction == 4:
+		#$AnimatedSprite2D.play("walk")
+		## Only play walk sound if it is not already playing
+		#if not $Walk.is_playing():
+			#$Walk.play()
+	elif (Input.is_action_pressed("move_right") and gravity_direction == 1) \
+	or (Input.is_action_pressed("up") and gravity_direction == 2) \
+	or (Input.is_action_pressed("move_left") and gravity_direction == 3) \
+	or (Input.is_action_pressed("down") and gravity_direction == 4):
 		$AnimatedSprite2D.flip_h = false
-		$AnimatedSprite2D.play("walk")
+		#$AnimatedSprite2D.play("walk")
+		## Only play walk sound if it is not already playing
+		#if not $Walk.is_playing():
+			#$Walk.play()
 	else:
+		# Stop walk sound when idle
 		$AnimatedSprite2D.play("idle")
+			#if $Walk.is_playing():
+				#$Walk.stop()
+
 
 
 func spawn_clone() -> void:
@@ -76,6 +87,7 @@ func spawn_clone() -> void:
 		return
 
 	$AnimatedSprite2D.play("summon")
+	$Clone.play()
 	var clone = clone_scene.instantiate()
 	var offset = 100
 	var new_position := position
@@ -86,7 +98,7 @@ func spawn_clone() -> void:
 		3: new_position.x += offset
 		4: new_position.y -= offset
 
-	clone.position = new_position
+	clone.position = position
 	clone.master_gravity = gravity_vector
 	clone.gravity_direction = gravity_direction
 
@@ -117,7 +129,6 @@ func _on_clone_died(clone_node) -> void:
 	if is_instance_valid(player_camera):
 		player_camera.make_current()
 
-		# Wait one frame (or a small delay) before playing awaken
 		await get_tree().process_frame
 		$AnimatedSprite2D.play("awaken")
 

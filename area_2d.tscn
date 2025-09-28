@@ -8,6 +8,7 @@ size = Vector2(339, 405.5)
 
 [node name="Area2D" type="Area2D"]
 scale = Vector2(0.15, 0.15)
+collision_mask = 3
 script = ExtResource("1_dl81w")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

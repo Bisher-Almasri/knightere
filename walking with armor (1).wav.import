@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b6mniwmt02b1h"
+path="res://.godot/imported/walking with armor (1).wav-c1b22f977f04f6d9159a90d2fd2f8beb.sample"
+
+[deps]
+
+source_file="res://walking with armor (1).wav"
+dest_files=["res://.godot/imported/walking with armor (1).wav-c1b22f977f04f6d9159a90d2fd2f8beb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

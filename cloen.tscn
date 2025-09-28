@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://d0jotl58e62ee"]
+[gd_scene load_steps=30 format=3 uid="uid://d0jotl58e62ee"]
 
 [ext_resource type="Script" uid="uid://c3vuyyn10ncot" path="res://cloen.gd" id="1_1yq2v"]
 [ext_resource type="Texture2D" uid="uid://d1c85s3htmvls" path="res://hollowknight.webp" id="2_1yq2v"]
+[ext_resource type="AudioStream" uid="uid://cs0ljo88sa8os" path="res://cloning sfx.wav" id="3_15k3a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_15k3a"]
 atlas = ExtResource("2_1yq2v")
@@ -204,6 +205,7 @@ size = Vector2(12, 19)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(5, 5)
+collision_layer = 2
 script = ExtResource("1_1yq2v")
 
 [node name="LifetimeTimer" type="Timer" parent="."]
@@ -223,3 +225,6 @@ shape = SubResource("RectangleShape2D_15k3a")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="Clone" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_15k3a")
